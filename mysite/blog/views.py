@@ -1,8 +1,10 @@
+import json
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from .models import Post
 from .forms import PostForm
 from django.shortcuts import redirect
+import random
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date') 
@@ -38,3 +40,15 @@ def post_edit(request, pk):
      else:
          form = PostForm(instance=post)
      return render(request, 'blog/post_edit.html', {'form': form})
+
+def charts_view(request):
+    series_x = [random.randint(1, 100) for _ in range(50)]
+    series_y = [random.randint(1, 100) for _ in range(50)]
+
+    data_points = list(zip(series_x, series_y))
+
+    context = {
+        'data_points': data_points,
+    }
+
+    return render(request, 'blog/charts.html', context)
