@@ -5,6 +5,7 @@ from .models import Post
 from .forms import PostForm
 from django.shortcuts import redirect
 import random
+import pandas as pd
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date') 
@@ -45,10 +46,9 @@ def charts_view(request):
     series_x = [random.randint(1, 100) for _ in range(50)]
     series_y = [random.randint(1, 100) for _ in range(50)]
 
-    data_points = list(zip(series_x, series_y))
-
     context = {
-        'data_points': data_points,
+        'series_x': series_x,
+        'series_y': series_y,
     }
-
-    return render(request, 'blog/charts.html', context)
+    print(context)
+    return render(request, 'blog/charts.html', {'context': context})
