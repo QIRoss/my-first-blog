@@ -16,3 +16,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def __repr__(self):
+        return f"Post(\nauthor={self.author}\ntitle='{self.title}'\ntext='{self.text}'\ncreated_date={self.created_date}\npublished_date={self.published_date}\n)"
